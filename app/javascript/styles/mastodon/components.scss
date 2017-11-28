@@ -244,6 +244,15 @@
   width: 0;
   height: 0;
   position: absolute;
+
+  img,
+  svg {
+    margin: 0 !important;
+    border: 0 !important;
+    padding: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
 }
 
 .ellipsis {
@@ -510,6 +519,7 @@
   font-weight: 400;
   overflow: hidden;
   white-space: pre-wrap;
+  padding-top: 5px;
 
   &.status__content--with-spoiler {
     white-space: normal;
@@ -520,8 +530,9 @@
   }
 
   .emojione {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
+    margin: -5px 0 0;
   }
 
   p {
@@ -601,7 +612,7 @@
     outline: 0;
     background: lighten($ui-base-color, 4%);
 
-    &.status-direct {
+    .status.status-direct {
       background: lighten($ui-base-color, 12%);
     }
 
@@ -757,7 +768,7 @@
 .status__action-bar {
   align-items: center;
   display: flex;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 .status__action-bar-button {
@@ -788,8 +799,9 @@
     line-height: 24px;
 
     .emojione {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
+      margin: -5px 0 0;
     }
   }
 
@@ -894,6 +906,7 @@
 .account__relationship {
   height: 18px;
   padding: 10px;
+  white-space: nowrap;
 }
 
 .account__header {
@@ -903,6 +916,18 @@
   background-size: cover;
   background-position: center;
   position: relative;
+
+  &.inactive {
+    opacity: 0.5;
+
+    .account__header__avatar {
+      filter: grayscale(100%);
+    }
+
+    .account__header__username {
+      color: $ui-primary-color;
+    }
+  }
 
   & > div {
     background: rgba(lighten($ui-base-color, 4%), 0.9);
@@ -2074,6 +2099,27 @@
   }
 }
 
+.keyboard-shortcuts {
+  padding: 8px 0 0;
+  overflow: hidden;
+
+  thead {
+    position: absolute;
+    left: -9999px;
+  }
+
+  td {
+    padding: 0 10px 8px;
+  }
+
+  code {
+    display: inline-block;
+    padding: 3px 5px;
+    background-color: lighten($ui-base-color, 8%);
+    border: 1px solid darken($ui-base-color, 4%);
+  }
+}
+
 .setting-text {
   color: $ui-primary-color;
   background: transparent;
@@ -2157,15 +2203,12 @@ button.icon-button.active i.fa-retweet {
 }
 
 .status-card-photo {
+  cursor: zoom-in;
   display: block;
   text-decoration: none;
-
-  img {
-    display: block;
-    width: 100%;
-    height: auto;
-    margin: 0;
-  }
+  width: 100%;
+  height: auto;
+  margin: 0;
 }
 
 .status-card-video {
@@ -3503,7 +3546,8 @@ button.icon-button.active i.fa-retweet {
 .boost-modal,
 .confirmation-modal,
 .report-modal,
-.actions-modal {
+.actions-modal,
+.mute-modal {
   background: lighten($ui-secondary-color, 8%);
   color: $ui-base-color;
   border-radius: 8px;
@@ -3553,6 +3597,7 @@ button.icon-button.active i.fa-retweet {
 
 .boost-modal__action-bar,
 .confirmation-modal__action-bar,
+.mute-modal__action-bar,
 .report-modal__action-bar {
   display: flex;
   justify-content: space-between;
@@ -3587,6 +3632,14 @@ button.icon-button.active i.fa-retweet {
   @media screen and (min-width: 480px) {
     max-width: 380px;
   }
+}
+
+.mute-modal {
+  line-height: 24px;
+}
+
+.mute-modal .react-toggle {
+  vertical-align: middle;
 }
 
 .report-modal__statuses,
@@ -3661,8 +3714,10 @@ button.icon-button.active i.fa-retweet {
   }
 }
 
-.confirmation-modal__action-bar {
-  .confirmation-modal__cancel-button {
+.confirmation-modal__action-bar,
+.mute-modal__action-bar {
+  .confirmation-modal__cancel-button,
+  .mute-modal__cancel-button {
     background-color: transparent;
     color: darken($ui-secondary-color, 34%);
     font-size: 14px;
@@ -3677,6 +3732,7 @@ button.icon-button.active i.fa-retweet {
 }
 
 .confirmation-modal__container,
+.mute-modal__container,
 .report-modal__target {
   padding: 30px;
   font-size: 16px;
@@ -4347,5 +4403,42 @@ noscript {
       overflow: hidden;
       border: 0;
     }
+  }
+}
+
+.account__moved-note {
+  padding: 14px 10px;
+  padding-bottom: 16px;
+  background: lighten($ui-base-color, 4%);
+  border-top: 1px solid lighten($ui-base-color, 8%);
+  border-bottom: 1px solid lighten($ui-base-color, 8%);
+
+  &__message {
+    position: relative;
+    margin-left: 58px;
+    color: $ui-base-lighter-color;
+    padding: 8px 0;
+    padding-top: 0;
+    padding-bottom: 4px;
+    font-size: 14px;
+
+    > span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &__icon-wrapper {
+    left: -26px;
+    position: absolute;
+  }
+
+  .detailed-status__display-avatar {
+    position: relative;
+  }
+
+  .detailed-status__display-name {
+    margin-bottom: 0;
   }
 }
